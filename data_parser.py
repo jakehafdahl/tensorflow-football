@@ -52,7 +52,6 @@ def run():
     players = get_master_player_list()
     seasons = get_player_seasons_list()
     games = get_player_games_list()
-    print("%s games parsed" % len(games))
     built = combine_players_seasons_games_lists(players, seasons, games)
 
 

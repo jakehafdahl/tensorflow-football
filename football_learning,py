@@ -1,14 +1,14 @@
+#!/usr/bin/env python
+
 import data_parser
 import numpy as np
-# from neuralnet_season import NeuralNetworkSeason
 import tensorflow_football
 
 def build_data_for_position(players, position):
     """
         Builds training data for a given position
-        """
+    """
     position_players = [player for player in players if player.position() == position and (len(player.seasons()) > 4)]
-    print("There are %s players for position %s" % (len(position_players), position))
 
     X = []
     y = []
@@ -20,9 +20,6 @@ def build_data_for_position(players, position):
                                 seasons[i + 2].format_data()))
             X.append(set)
             y.append(seasons[i + 3].format_data())
-
-
-    print("There are %s training examples for position %s, with %s features" % (len(X),position,len(X[0])))
 
     return { 'train': X, 'target': y}
 
@@ -64,7 +61,6 @@ def run():
     players = data_parser.get_master_player_list()
     seasons = data_parser.get_player_seasons_list()
     games = data_parser.get_player_games_list()
-    print("%s games parsed" % len(games))
     built = data_parser.combine_players_seasons_games_lists(players, seasons, games)
     players_list = [value for (key, value) in built.iteritems()]
     data = format_player_data(players_list)
@@ -79,13 +75,16 @@ def run():
     # y_len = len(np.asarray(rbtrain_target[0])[0])
     # model = TensorFlowModel(x_len, y_len)
 
+    # pass in large collection of
+    # build_position_round_classifier(
+
     # #avg = evaluate_model(test_data, test_target, model)
     #model.set_training_values(rbtrain_data, rbtrain_target, rbtest_data, rbtest_target)
 
     #print("average errors for linear reg are %s" % avg)
-    tensorflow_football.run_regression(rbtrain_data, rbtrain_target, rbtest_data, rbtest_target, normalize=True)
+    #tensorflow_football.run_regression(rbtrain_data, rbtrain_target, rbtest_data, rbtest_target, normalize=True, polynomial=True)
     #tensorflow_football.run_regression(wrtrain_data, wrtrain_target, wrtest_data, wrtest_target, normalize=True)
-    # tensorflow_football.run_regression(qbtrain_data, qbtrain_target, qbtest_data, qbtest_target, normalize=True)
+    tensorflow_football.run_regression(qbtrain_data, qbtrain_target, qbtest_data, qbtest_target, normalize=True)
     #tensorflow_football.run_regression(tetrain_data, tetrain_target, tetest_data, tetest_target, normalize=True)
 
 
